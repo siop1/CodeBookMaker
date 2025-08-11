@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Code Notebook Maker — Create Beautiful PDF Notebooks from Your Code</title>
+  <meta name="description" content="Upload a ZIP of your code and generate a beautifully-styled, syntax-highlighted PDF notebook. SEO-friendly, responsive, and accessible UI." />
+  <link rel="canonical" href="https://example.com/" />
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Code Notebook Maker — Generate PDF Notebooks from Code">
+  <meta property="og:description" content="Upload a ZIP of source files and get a styled PDF with syntax highlighting and table of contents.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://example.com/">
+  <meta property="og:image" content="/assets/og-image.png">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Code Notebook Maker">
+  <meta name="twitter:description" content="Create professional-looking code notebooks (PDFs) from your codebase.">
+
+  <!-- Structured data (Organization + WebSite) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Code Notebook Maker",
+    "url": "https://example.com/",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://example.com/?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+
+  <!-- Critical CSS (responsive, accessible, modern) -->
+  <style>
+    :root{
+      --bg:#0f1720; --card:#0b1220; --muted:#9aa6b2; --accent:#06b6d4; --glass:rgba(255,255,255,0.04);
+      --radius:12px; --max:1100px; --ff-sans:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;}
+    body{
+      margin:0; font-family:var(--ff-sans); background:linear-gradient(180deg,#071021 0%, #071827 60%); color: #e6eef6; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+      line-height:1.6; -webkit-tap-highlight-color:transparent;
+    }
+    .container{max-width:var(--max);margin:0 auto;padding:48px 20px}
+
+    /* Header */
+    header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:36px}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:46px;height:46px;background:linear-gradient(135deg,var(--accent),#7c3aed);border-radius:10px;display:grid;place-items:center;box-shadow:0 6px 18px rgba(4,6,12,0.6)}
+    .logo svg{width:28px;height:28px}
+    h1.site-title{font-size:1.05rem;margin:0}
+    p.tag{margin:0;color:var(--muted);font-size:0.92rem}
+
+    /* Hero */
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:32px;align-items:center}
+    .hero-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:28px;border-radius:var(--radius);box-shadow:0 8px 30px rgba(2,6,23,0.6);backdrop-filter:blur(6px)}
+    .kicker{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(6,182,212,0.12);color:var(--accent);font-weight:600;font-size:0.85rem}
+    .hero h2{margin:12px 0 6px;font-size:1.65rem;line-height:1.05}
+    .hero p{color:var(--muted);margin:0 0 18px}
+
+    .features{display:flex;flex-direction:column;gap:12px}
+    .feature{display:flex;gap:12px;align-items:flex-start}
+    .feature svg{flex:0 0 36px}
+
+    /* Upload form */
+    .upload{padding:18px;border-radius:10px;background:linear-gradient(90deg, rgba(6,182,212,0.04), rgba(124,58,237,0.02));border:1px solid rgba(255,255,255,0.03)}
+    .dropzone{border:2px dashed rgba(255,255,255,0.06);padding:18px;border-radius:8px;display:flex;flex-direction:column;gap:8px;align-items:center;justify-content:center;min-height:160px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent)}
+    .dropzone.dragover{border-color:var(--accent);box-shadow:0 10px 30px rgba(6,182,212,0.08)}
+    .muted{color:var(--muted);font-size:0.95rem}
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:9px;background:linear-gradient(90deg,var(--accent),#7c3aed);color:#021924;font-weight:700;border:none;cursor:pointer;box-shadow:0 8px 20px rgba(6,182,212,0.08);transition:transform .16s ease, box-shadow .16s ease}
+    .btn:active{transform:translateY(1px)}
+
+    /* Progress / result */
+    .result{margin-top:14px;font-size:0.95rem}
+
+    /* Sections */
+    section{margin-top:48px}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+
+    /* Footer */
+    footer{margin-top:72px;padding:18px 0;color:var(--muted);font-size:0.95rem;text-align:center}
+
+    /* Responsive */
+    @media (max-width:980px){.hero{grid-template-columns:1fr;}.grid-3{grid-template-columns:1fr 1fr}.container{padding:28px 16px}}
+    @media (max-width:620px){.grid-3{grid-template-columns:1fr}.logo{width:40px;height:40px}.hero h2{font-size:1.35rem}}
+
+    /* small animation */
+    .float{animation:float 6s ease-in-out infinite}
+    @keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-6px)}100%{transform:translateY(0)}}
+
+    /* accessibility focus */
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+    /* nice code preview box for UI demo */
+    pre.code-sample{background:#071826;border-radius:8px;padding:12px;color:#cfeef8;overflow:auto;border:1px solid rgba(255,255,255,0.03)}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo float" aria-hidden="true">
+          <!-- Simple icon -->
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 7h16M4 12h10M4 17h16" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <h1 class="site-title">Code Notebook Maker</h1>
+          <p class="tag">Beautiful, searchable PDF notebooks from your source code — syntax-highlighted, TOC, and more.</p>
+        </div>
+      </div>
+      <nav aria-label="primary">
+        <a href="#features" style="color:var(--muted);text-decoration:none;margin-right:14px">Features</a>
+        <a href="#how" style="color:var(--muted);text-decoration:none;margin-right:14px">How it works</a>
+        <a href="#faq" style="color:var(--muted);text-decoration:none">FAQ</a>
+      </nav>
+    </header>
+
+    <main>
+      <div class="hero">
+        <div class="hero-card">
+          <span class="kicker">Fast • Accessible • SEO-friendly</span>
+          <h2>Turn your code into a professional PDF notebook — instantly.</h2>
+          <p class="muted">Upload a ZIP of your project. We generate a PDF with a clean table of contents, readable code blocks, and folder descriptions. Optimized for printing and sharing.</p>
+
+          <div class="features" id="features">
+            <div class="feature"><svg viewBox="0 0 24 24" width="36" height="36" aria-hidden="true"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z" fill="#06b6d4"/></svg><div><strong>Clean typography</strong><div class="muted">Monospaced code, readable headings, proper spacing for print.</div></div></div>
+            <div class="feature"><svg viewBox="0 0 24 24" width="36" height="36" aria-hidden="true"><path d="M3 7h18M7 11h10M5 15h14" stroke="#7c3aed" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg><div><strong>Table of contents</strong><div class="muted">Automatic TOC with links to files and folders.</div></div></div>
+            <div class="feature"><svg viewBox="0 0 24 24" width="36" height="36" aria-hidden="true"><path d="M3 12h18M12 3v18" stroke="#34d399" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg><div><strong>SEO & Accessibility</strong><div class="muted">Semantic HTML, meta tags, and screen-reader friendly labels.</div></div></div>
+          </div>
+
+          <section aria-labelledby="how"><h3 id="how">How it works</h3>
+            <ol class="muted" style="padding-left:18px">
+              <li>Upload a ZIP containing your codebase.</li>
+              <li>We parse files, add syntax highlighting and a table of contents.</li>
+              <li>Download a print-ready PDF.</li>
+            </ol>
+          </section>
+
+        </div>
+
+        <!-- Right column: upload form -->
+        <aside class="upload" aria-label="Upload form">
+          <form id="uploadForm" action="/uploads" method="post" enctype="multipart/form-data" novalidate>
+            <label for="title" class="sr-only">Notebook title</label>
+            <input id="title" name="title" type="text" placeholder="Notebook title (e.g. My Project)" required style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.02);background:transparent;color:inherit;margin-bottom:12px">
+
+            <div id="drop" class="dropzone" tabindex="0" aria-label="Drop ZIP file here or click to choose">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v12" stroke="#06b6d4" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 7l4-4 4 4" stroke="#06b6d4" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><rect x="3" y="13" width="18" height="8" rx="2" stroke="#7c3aed" stroke-width="1.2"/></svg>
+              <div style="text-align:center">
+                <strong>Drop ZIP here</strong>
+                <div class="muted">or <button type="button" id="browseBtn" style="all:unset;color:var(--accent);font-weight:700;cursor:pointer">browse</button> to select</div>
+              </div>
+              <input id="fileInput" name="file" type="file" accept=".zip" class="sr-only" required>
+            </div>
+
+            <div style="display:flex;gap:10px;margin-top:12px;align-items:center">
+              <button class="btn" type="submit">Generate PDF</button>
+              <div id="status" class="muted result">No file selected</div>
+            </div>
+          </form>
+
+          <div style="margin-top:14px">
+            <small class="muted">File size limit: 100 MB. Supported: .zip containing source files. We respect your privacy — files are deleted after processing.</small>
+          </div>
+
+        </aside>
+      </div>
+
+      <section aria-labelledby="samples">
+        <h3 id="samples">Live preview</h3>
+        <p class="muted">This is a preview of how the generated PDF will look — with monospace code boxes and headings (UI-only demo).</p>
+        <pre class="code-sample">// Example: hello.py
+print("Hello, world!")
+        </pre>
+      </section>
+
+      <section id="faq" aria-labelledby="faqh">
+        <h3 id="faqh">FAQ</h3>
+        <div class="grid-3">
+          <div>
+            <strong>Can I upload a folder?</strong>
+            <div class="muted">Use a ZIP. The site extracts and preserves folder structure for the TOC.</div>
+          </div>
+          <div>
+            <strong>Is my code private?</strong>
+            <div class="muted">Yes — files are processed temporarily and removed. For extra security, host your own instance.</div>
+          </div>
+          <div>
+            <strong>Which languages are supported?</strong>
+            <div class="muted">Pygments supports most languages — common ones like Python, JS, C, Java, PHP, etc.</div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer>
+      <div>© <span id="year"></span> Code Notebook Maker — Built for devs and educators.</div>
+    </footer>
+  </div>
+
+  <!-- Minimal JS: drag/drop, form UX, progressive enhancement -->
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const drop = document.getElementById('drop');
+    const fileInput = document.getElementById('fileInput');
+    const browseBtn = document.getElementById('browseBtn');
+    const status = document.getElementById('status');
+    const form = document.getElementById('uploadForm');
+
+    const setStatus = (text) => { status.textContent = text; };
+
+    browseBtn.addEventListener('click', () => fileInput.click());
+    drop.addEventListener('click', () => fileInput.click());
+
+    ['dragenter','dragover'].forEach(ev=>{
+      drop.addEventListener(ev, e=>{ e.preventDefault(); e.stopPropagation(); drop.classList.add('dragover'); });
+    });
+    ['dragleave','drop'].forEach(ev=>{
+      drop.addEventListener(ev, e=>{ e.preventDefault(); e.stopPropagation(); drop.classList.remove('dragover'); });
+    });
+
+    drop.addEventListener('drop', e=>{
+      const dt = e.dataTransfer;
+      if(!dt) return;
+      const file = dt.files[0];
+      if(file) handleFile(file);
+    });
+
+    fileInput.addEventListener('change', e=>{
+      const file = e.target.files[0];
+      if(file) handleFile(file);
+    });
+
+    function handleFile(file){
+      if(!file.name.toLowerCase().endsWith('.zip')){ setStatus('Please select a .zip file'); fileInput.value = ''; return; }
+      setStatus(file.name + ' selected');
+    }
+
+    // Optional: submit via fetch so you can show progress
+    form.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const file = fileInput.files[0];
+      const title = document.getElementById('title').value.trim() || 'notebook';
+      if(!file){ alert('Please select a ZIP file'); return; }
+
+      setStatus('Uploading...');
+      const data = new FormData();
+      data.append('file', file);
+      data.append('title', title);
+
+      try{
+        const res = await fetch(form.action, { method:'POST', body: data });
+        if(!res.ok) throw new Error('Upload failed: ' + res.status);
+
+        // If server returns a PDF blob, download it
+        const blob = await res.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = title.replace(/[^a-z0-9\-]/gi,'_') + '.pdf';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+        setStatus('Done — PDF downloaded');
+      }catch(err){
+        console.error(err);
+        setStatus('Error: ' + err.message);
+      }
+    });
+
+    // Accessibility: keyboard
+    drop.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') fileInput.click(); });
+  </script>
+
+</body>
+</html>
