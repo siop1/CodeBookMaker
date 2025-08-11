@@ -13,12 +13,8 @@ import weasyprint
 app = Flask(__name__)
 app.secret_key = "your_secret_key_here"  # Needed for flashing messages
 
-# Allowed upload extensions
 ALLOWED_EXTENSIONS = {'zip'}
-
-# Default output directory (temp only here)
 OUTPUT_DIR = tempfile.mkdtemp()
-
 DESCRIPTION_FILES = ["README.md", "README.txt", "description.txt"]
 
 
@@ -137,8 +133,18 @@ def upload_file():
         try:
             with zipfile.ZipFile(zip_path, 'r') as zip_ref:
                 zip_ref.extractall(extract_dir)
-            pdf_path = generate_notebook(extract_dir, "My Notebook")
-            return send_file(pdf_path, as_attachment=True, download_name="notebook.pdf")
+
+            # Get the notebook title from the form, fallback to default
+            notebook_title = request.form.get('title', '').strip()
+            if not notebook_title:
+                notebook_title = "My Notebook"
+
+            pdf_path = generate_notebook(extract_dir, notebook_title)
+
+            # Secure filename for download
+            download_name = secure_filename(notebook_title) + ".pdf"
+
+            return send_file(pdf_path, as_attachment=True, download_name=download_name)
         finally:
             shutil.rmtree(temp_dir)
             shutil.rmtree(extract_dir)
