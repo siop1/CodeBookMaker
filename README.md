@@ -74,8 +74,7 @@ CodeBookMaker/
 
 ## 📄 Sample Output
 
-To see what the final output looks like, check out this [sample PDF](https://github.com/siop1/CodeBookMaker/
-/blob/master/static/sample.pdf).
+To see what the final output looks like, check out this [sample PDF](https://github.com/siop1/CodeBookMaker/blob/master/static/sample.pdf).
 
 ---
 
@@ -87,5 +86,4 @@ Contributions are welcome! If you have suggestions for improvements or new featu
 
 ## 🛡️ License
 
-This project is licensed under the MIT License - see the [LICENSE](https://github.com/siop1/CodeBookMaker/
-/blob/master/LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/siop1/CodeBookMaker/blob/master/LICENSE) file for details.
