@@ -1,4 +1,4 @@
-# Code Notebook Maker
+# CodeBookMaker
 
 Create beautiful, syntax-highlighted PDF notebooks from your source code.
 
@@ -16,7 +16,7 @@ This project is a web application that takes a ZIP archive of your source code a
 
 ## 🚀 How to Use
 
-1. **Visit the Website**: Go to [https://codenotebookmaker.onrender.com](https://codenotebookmaker.onrender.com).  
+1. **Visit the Website**: Go to [https://codebookmaker.onrender.com](https://codebookmaker.onrender.com).  
 2. **Enter a Title**: Give your notebook a descriptive title.  
 3. **Upload Your Code**: Drag and drop a `.zip` file of your project into the upload area or click "browse" to select a file.  
 4. **Generate & Download**: Click the "Generate PDF" button. A PDF file will be automatically downloaded to your computer.
@@ -36,8 +36,8 @@ You'll need a backend server to handle the file upload and PDF generation. This 
 
 1. Clone the repository:  
    ```bash
-   git clone https://github.com/siop1/CodeNotebookMaker.git
-   cd CodeNotebookMaker
+   git clone https://github.com/siop1/CodeBookMaker.git
+   cd CodeBookMaker
    ```
 
 2. Install all the necessary backend dependencies from the `requirements.txt` file:  
@@ -50,7 +50,7 @@ You'll need a backend server to handle the file upload and PDF generation. This 
 The project has a simple and organized structure:
 
 ```
-CodeNotebookMaker/
+CodeBookMaker/
 ├── app.py                  # The backend server logic (Flask)
 ├── templates/
 │   └── index.html          # The frontend user interface
@@ -74,7 +74,8 @@ CodeNotebookMaker/
 
 ## 📄 Sample Output
 
-To see what the final output looks like, check out this [sample PDF](https://github.com/siop1/CodeNotebookMaker/blob/master/static/sample.pdf).
+To see what the final output looks like, check out this [sample PDF](https://github.com/siop1/CodeBookMaker/
+/blob/master/static/sample.pdf).
 
 ---
 
@@ -86,4 +87,5 @@ Contributions are welcome! If you have suggestions for improvements or new featu
 
 ## 🛡️ License
 
-This project is licensed under the MIT License - see the [LICENSE](https://github.com/siop1/CodeNotebookMaker/blob/master/LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/siop1/CodeBookMaker/
+/blob/master/LICENSE) file for details.
